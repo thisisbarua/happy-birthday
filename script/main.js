@@ -17,12 +17,35 @@ const fetchData = () => {
 
         // Check if the iteration is over
         // Run amimation if so
-        if ( dataArr.length === dataArr.indexOf(customData) + 1 ) {
+        if (dataArr.length === dataArr.indexOf(customData) + 1) {
           animationTimeline();
-        } 
+        }
       });
     });
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const modalOverlay = document.getElementById('modal-overlay');
+  const startButton = document.getElementById('start-button');
+  const audio = document.querySelector('audio');
+
+  startButton.addEventListener('click', () => {
+    // Hide the modal
+    modalOverlay.style.opacity = 0;
+    setTimeout(() => modalOverlay.style.display = 'none', 500);
+
+    // Play the music
+    if (audio) {
+      audio.play();
+    }
+
+    // Run the existing animation logic from the original script
+    loadJSON().then(initialize);
+  }, { once: true });
+});
+
+// The rest of the script.js file remains the same below this
+// (e.g., the loadJSON() and initialize() functions)
 
 // Animation Timeline
 const animationTimeline = () => {
@@ -298,6 +321,10 @@ const animationTimeline = () => {
   // Restart Animation on click
   const replyBtn = document.getElementById("replay");
   replyBtn.addEventListener("click", () => {
+    const audio = document.querySelector('audio');
+    if (audio) {
+      audio.play();
+    }
     tl.restart();
   });
 };
